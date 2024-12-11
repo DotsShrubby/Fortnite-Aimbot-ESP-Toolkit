@@ -1,0 +1,52 @@
+name: Fortnite Aimbot ESP Toolkit Auto Update
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "*/60 * * * *"
+
+jobs:
+  auto_commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Modify Fortnite Toolkit File
+        run: |
+          d='DATE '`date '+%Y-%m-%d %H:%M:%S'`
+          echo $d >> Toolkit
+
+      - name: Commit changes to Toolkit
+        run: |
+          git config --local user.email "Fortnite-Aimbot-ESP-Toolkit@gmail.com"
+          git config --local user.name "Fortnite Aimbot ESP Toolkit"
+          git add Toolkit
+
+          arr[0]="Aimbot Toolkit Updated"
+          arr[1]="Toolkit: Fortnite ESP refreshed"
+          arr[2]="System Check: Aimbot Features"
+          arr[3]="Fortnite ESP Toolkit - update"
+          arr[4]="ESP Modding! Toolkit updated"
+          arr[5]="Aimbot & ESP confirmed"
+          arr[6]="Toolkit Modifications: refreshed"
+          arr[7]="Toolkit updated for Fortnite Cheats"
+          arr[8]="Update: Fortnite ESP Toolkit success"
+          arr[9]="Fortnite Aimbot running smoothly"
+
+          rand=$[$RANDOM % ${#arr[@]}]
+
+          git commit -m "${arr[$rand]}"
+
+      - name: Push Changes to Repository
+        uses: ad-m/github-push-action@master
+        with:
+          force: true
+          directory: "."
+          github_token: ${{ secrets.GITHUB_TOKEN }}
